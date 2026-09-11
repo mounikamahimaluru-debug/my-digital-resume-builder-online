@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Digital Resume Builder</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Digital Resume Builder</h1>
+
+  <p class="subtitle">
+    Fill in your details to generate your profile
+  </p>
+
+  <!-- EDIT MODE MESSAGE -->
+  <div
+    id="editModeMessage"
+    style="
+      display:none;
+      padding:12px;
+      margin-bottom:20px;
+      background:#e8f1ff;
+      border:1px solid #1976d2;
+      border-radius:6px;
+      color:#125ca8;
+      font-weight:bold;
+    "
+  >
+    ✏️ Edit Resume Mode
+  </div>
+
+  <form id="resumeForm" novalidate>
+
+    <!-- ================= PROFILE PHOTO ================= -->
+
+    <div class="form-group">
+
+      <label for="profilePhoto">
+        Profile Photo
+      </label>
+
+      <input
+        type="file"
+        id="profilePhoto"
+        name="profilePhoto"
+        accept="image/jpeg,image/png,image/webp"
+      >
+
+      <small>
+        Upload JPG, PNG or WEBP image (maximum 2 MB)
+      </small>
+
+      <div
+        id="photoPreviewContainer"
+        style="margin-top:15px;"
+      >
+
+        <img
+          id="photoPreview"
+          src=""
+          alt="Profile Photo Preview"
+          style="
+            display:none;
+            width:130px;
+            height:130px;
+            object-fit:cover;
+            border-radius:50%;
+            border:3px solid #ddd;
+          "
+        >
+
+      </div>
+
+      <span
+        class="error"
+        id="photoError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= NAME ================= -->
+
+    <div class="form-group">
+
+      <label for="name">
+        Full Name (CAPITAL LETTERS only)
+      </label>
+
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="EG: JOHN DAVID"
+      >
+
+      <span
+        class="error"
+        id="nameError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= DOB ================= -->
+
+    <div class="form-group">
+
+      <label for="dob">
+        Date of Birth
+      </label>
+
+      <input
+        type="date"
+        id="dob"
+        name="dob"
+      >
+
+      <span
+        class="error"
+        id="dobError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= AGE ================= -->
+
+    <div class="form-group">
+
+      <label for="age">
+        Age (auto-calculated)
+      </label>
+
+      <input
+        type="text"
+        id="age"
+        name="age"
+        readonly
+        placeholder="Auto calculated from DOB"
+      >
+
+    </div>
+
+
+    <!-- ================= PHONE ================= -->
+
+    <div class="form-group">
+
+      <label for="phone">
+        Phone Number (10 digits)
+      </label>
+
+      <input
+        type="text"
+        id="phone"
+        name="phone"
+        maxlength="10"
+        placeholder="EG: 9876543210"
+      >
+
+      <span
+        class="error"
+        id="phoneError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= EMAIL ================= -->
+
+    <div class="form-group">
+
+      <label for="email">
+        Email
+      </label>
+
+      <input
+        type="text"
+        id="email"
+        name="email"
+        placeholder="EG: john@example.com"
+      >
+
+      <span
+        class="error"
+        id="emailError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= BRANCH ================= -->
+
+    <div class="form-group">
+
+      <label for="branch">
+        Branch
+      </label>
+
+      <select
+        id="branch"
+        name="branch"
+      >
+
+        <option value="">
+          -- Select Branch --
+        </option>
+
+        <option value="CSE">CSE</option>
+        <option value="IOT">IOT</option>
+        <option value="EEE">EEE</option>
+        <option value="ECE">ECE</option>
+        <option value="CIVIL">CIVIL</option>
+        <option value="MECH">MECH</option>
+        <option value="AI">AI</option>
+        <option value="AIML">AIML</option>
+
+      </select>
+
+      <span
+        class="error"
+        id="branchError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= COURSE ================= -->
+
+    <div class="form-group">
+
+      <label for="course">
+        Course
+      </label>
+
+      <select
+        id="course"
+        name="course"
+      >
+
+        <option value="">
+          -- Select Course --
+        </option>
+
+        <option value="BTECH">B.TECH</option>
+        <option value="MTECH">M.TECH</option>
+        <option value="B.COM">B.COM</option>
+        <option value="MCA">MCA</option>
+
+      </select>
+
+      <span
+        class="error"
+        id="courseError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= ADDRESS ================= -->
+
+    <div class="form-group">
+
+      <label for="address">
+        Address
+      </label>
+
+      <textarea
+        id="address"
+        name="address"
+        rows="2"
+        placeholder="Your address"
+      ></textarea>
+
+      <span
+        class="error"
+        id="addressError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= OBJECTIVE ================= -->
+
+    <div class="form-group">
+
+      <label for="objective">
+        Career Objective
+      </label>
+
+      <textarea
+        id="objective"
+        name="objective"
+        rows="2"
+        placeholder="Short career objective"
+      ></textarea>
+
+      <span
+        class="error"
+        id="objectiveError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= EDUCATION ================= -->
+
+    <div class="section-block">
+
+      <div class="section-head">
+
+        <h3>
+          Education
+        </h3>
+
+        <button
+          type="button"
+          class="add-btn"
+          id="addEducationBtn"
+        >
+          + Add Education
+        </button>
+
+      </div>
+
+      <div id="educationList"></div>
+
+      <span
+        class="error"
+        id="educationError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= EXPERIENCE ================= -->
+
+    <div class="section-block">
+
+      <div class="section-head">
+
+        <h3>
+          Career / Work Experience
+        </h3>
+
+        <button
+          type="button"
+          class="add-btn"
+          id="addExperienceBtn"
+        >
+          + Add Experience
+        </button>
+
+      </div>
+
+      <div id="experienceList"></div>
+
+      <p class="hint">
+        Optional — leave empty if you have no work experience yet.
+      </p>
+
+      <span
+        class="error"
+        id="experienceError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= SKILLS ================= -->
+
+    <div class="form-group">
+
+      <label for="skills">
+        Skills (comma separated)
+      </label>
+
+      <textarea
+        id="skills"
+        name="skills"
+        rows="2"
+        placeholder="EG: Java, Python, Communication"
+      ></textarea>
+
+      <span
+        class="error"
+        id="skillsError"
+      ></span>
+
+    </div>
+
+
+    <!-- ================= SERVER ERROR ================= -->
+
+    <p
+      class="serverError"
+      id="serverError"
+    ></p>
+
+
+    <!-- ================= NEXT / UPDATE ================= -->
+
+    <button
+      type="submit"
+      id="nextBtn"
+    >
+      Next →
+    </button>
+
+  </form>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

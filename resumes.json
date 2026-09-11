@@ -1,0 +1,46 @@
+[
+  {
+    "name": "GOSU HEMALATHA",
+    "dob": "2005-12-19",
+    "age": 20,
+    "phone": "7995011018",
+    "branch": "EEE",
+    "course": "BTECH",
+    "email": "hemalatha@gmail.com",
+    "address": "kavali",
+    "objective": "frghtjuyku,l",
+    "skills": "scdgfjhtj",
+    "education": [
+      {
+        "institution": "pbr vits",
+        "degree": "b.tech",
+        "year": "2028",
+        "percentage": "7.9"
+      }
+    ],
+    "experience": [],
+    "createdAt": "2026-08-25T17:38:36.009Z"
+  },
+  {
+    "name": "IHUYGTFRDTFGH",
+    "dob": "2006-05-12",
+    "age": 20,
+    "phone": "8899999999",
+    "branch": "IOT",
+    "course": "BTECH",
+    "email": "hemalathagosu7@gmail.com",
+    "address": "kavali",
+    "objective": "jjfyuiif",
+    "skills": "eef",
+    "education": [
+      {
+        "institution": "ueueuu",
+        "degree": "jdydh",
+        "year": "2026",
+        "percentage": "90"
+      }
+    ],
+    "experience": [],
+    "createdAt": "2026-08-25T17:06:54.989Z"
+  }
+]

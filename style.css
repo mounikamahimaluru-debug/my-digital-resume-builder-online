@@ -1,0 +1,276 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #4b6cb7, #182848);
+  min-height: 100vh;
+  margin: 0;
+  padding: 30px 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  background: #fff;
+  width: 100%;
+  max-width: 560px;
+  border-radius: 12px;
+  padding: 30px 35px 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 4px;
+  color: #182848;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #182848;
+}
+
+input, select, textarea {
+  padding: 10px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #4b6cb7;
+}
+
+input[readonly] {
+  background: #f2f2f2;
+  color: #444;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 12.5px;
+  min-height: 16px;
+  margin-top: 4px;
+}
+
+input.invalid, select.invalid, textarea.invalid {
+  border-color: #d32f2f;
+  background: #fff6f6;
+}
+
+.section-block {
+  margin-bottom: 18px;
+  padding-top: 6px;
+  border-top: 1px solid #eee;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.section-head h3 {
+  margin: 0;
+  color: #182848;
+  font-size: 15px;
+}
+
+.add-btn {
+  width: auto;
+  padding: 6px 12px;
+  font-size: 12.5px;
+  background: #4b6cb7;
+  margin-top: 0;
+}
+
+.add-btn:hover {
+  background: #182848;
+}
+
+.hint {
+  font-size: 12px;
+  color: #888;
+  margin: 2px 0 0;
+}
+
+.entry-row {
+  position: relative;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  padding: 14px 40px 6px 14px;
+  margin-bottom: 12px;
+  background: #fafbff;
+}
+
+.entry-row .form-group {
+  margin-bottom: 10px;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 50%;
+  background: #d32f2f;
+  font-size: 14px;
+  line-height: 1;
+  margin-top: 0;
+}
+
+.remove-btn:hover {
+  background: #a11f1f;
+}
+
+.empty-hint {
+  font-size: 12.5px;
+  color: #999;
+  padding: 6px 2px;
+}
+
+.serverError {
+  color: #d32f2f;
+  font-size: 13px;
+  text-align: center;
+  min-height: 18px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #182848;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #4b6cb7;
+}
+
+/* ---------- Profile page ---------- */
+
+.profile-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.profile-header {
+  text-align: center;
+  border-bottom: 2px solid #182848;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.profile-header h2 {
+  margin: 0;
+  color: #182848;
+  letter-spacing: 1px;
+}
+
+.profile-header p {
+  margin: 4px 0 0;
+  color: #666;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+  font-size: 14px;
+}
+
+.profile-row span:first-child {
+  font-weight: 600;
+  color: #444;
+}
+
+.profile-row span:last-child {
+  color: #222;
+  text-align: right;
+  max-width: 60%;
+}
+
+.back-btn {
+  margin-top: 20px;
+  background: #666;
+}
+
+.back-btn:hover {
+  background: #444;
+}
+
+.section-title {
+  margin: 20px 0 10px;
+  color: #182848;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.sub-card {
+  background: #fafbff;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+}
+
+.sub-card-title {
+  font-weight: 600;
+  color: #182848;
+  font-size: 14px;
+}
+
+.sub-card-meta {
+  font-size: 12.5px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.sub-card-desc {
+  font-size: 13px;
+  color: #333;
+  margin: 6px 0 0;
+}
+
+.loading, .not-found {
+  text-align: center;
+  color: #666;
+  padding: 30px 0;
+}

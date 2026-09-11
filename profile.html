@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Resume</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            color: #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            border-radius: 10px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 25px;
+        }
+
+        .photo {
+            width: 130px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .job {
+            margin-top: 8px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .contact {
+            margin-top: 12px;
+            line-height: 1.7;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section h2 {
+            font-size: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 7px;
+        }
+
+        .section p {
+            line-height: 1.7;
+        }
+
+        .item {
+            margin-bottom: 15px;
+        }
+
+        .item strong {
+            font-size: 17px;
+        }
+
+        ul {
+            line-height: 1.8;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            margin: 5px;
+        }
+
+        .back {
+            background: #333;
+            color: white;
+        }
+
+        .edit {
+            background: #2563eb;
+            color: white;
+        }
+
+        .print {
+            background: #555;
+            color: white;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+        }
+
+        #error {
+            text-align: center;
+            color: red;
+            padding: 40px;
+            font-size: 18px;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+        }
+
+        @media print {
+
+            .buttons {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="loading">
+    Loading Resume...
+</div>
+
+<div id="error"></div>
+
+<div class="container" id="resumeContainer" style="display:none;">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <img
+            id="profilePhoto"
+            class="photo"
+            src=""
+            alt="Profile Photo"
+        >
+
+        <div>
+
+            <h1 id="name"></h1>
+
+            <div class="job" id="jobTitle">
+                Resume
+            </div>
+
+            <div class="contact">
+
+                📧 <span id="email"></span><br>
+
+                📱 <span id="phone"></span><br>
+
+                📍 <span id="address"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PERSONAL DETAILS -->
+    <div class="section">
+
+        <h2>Personal Details</h2>
+
+        <p>
+            <strong>Date of Birth:</strong>
+            <span id="dob"></span>
+        </p>
+
+        <p>
+            <strong>Age:</strong>
+            <span id="age"></span>
+        </p>
+
+        <p>
+            <strong>Course:</strong>
+            <span id="course"></span>
+        </p>
+
+        <p>
+            <strong>Branch:</strong>
+            <span id="branch"></span>
+        </p>
+
+    </div>
+
+
+    <!-- CAREER OBJECTIVE -->
+    <div class="section">
+
+        <h2>Career Objective</h2>
+
+        <p id="objective"></p>
+
+    </div>
+
+
+    <!-- SKILLS -->
+    <div class="section">
+
+        <h2>Skills</h2>
+
+        <ul id="skills"></ul>
+
+    </div>
+
+
+    <!-- EDUCATION -->
+    <div class="section">
+
+        <h2>Education</h2>
+
+        <div id="education"></div>
+
+    </div>
+
+
+    <!-- EXPERIENCE -->
+    <div class="section">
+
+        <h2>Work Experience</h2>
+
+        <div id="experience"></div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+    <div class="buttons">
+
+        <button
+            class="back"
+            onclick="goBack()">
+            ← Back
+        </button>
+
+        <button
+            class="edit"
+            onclick="editResume()">
+            ✏ Edit / Update
+        </button>
+
+        <button
+            class="print"
+            onclick="window.print()">
+            🖨 Print / Download
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const API_URL = "http://localhost:5000";
+
+
+// ===============================
+// GET URL PARAMETERS
+// ===============================
+
+const params =
+    new URLSearchParams(window.location.search);
+
+const resumeId =
+    params.get("id");
+
+const resumeName =
+    params.get("name");
+
+
+// Store current resume
+let currentResume = null;
+
+
+// ===============================
+// LOAD RESUME
+// ===============================
+
+async function loadResume() {
+
+    try {
+
+        let url = "";
+
+
+        // -------------------------------
+        // FIRST: LOAD BY ID
+        // -------------------------------
+
+        if (resumeId) {
+
+            url =
+                `${API_URL}/api/resume-id/${encodeURIComponent(resumeId)}`;
+
+        }
+
+
+        // -------------------------------
+        // FALLBACK: LOAD BY NAME
+        // -------------------------------
+
+        else if (resumeName) {
+
+            url =
+                `${API_URL}/api/resume/${encodeURIComponent(resumeName)}`;
+
+        }
+
+
+        else {
+
+            throw new Error(
+                "Resume ID or name not found"
+            );
+
+        }
+
+
+        console.log("PROFILE URL:", url);
+
+
+        const response =
+            await fetch(url);
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "PROFILE RESPONSE:",
+            result
+        );
+
+
+        if (!response.ok || !result.success) {
+
+            throw new Error(
+                result.message ||
+                "Resume not found"
+            );
+
+        }
+
+
+        const resume =
+            result.resume || result.data;
+
+
+        if (!resume) {
+
+            throw new Error(
+                "Resume data not found"
+            );
+
+        }
+
+
+        currentResume = resume;
+
+
+        // ===============================
+        // BASIC DETAILS
+        // ===============================
+
+        document.getElementById("name")
+            .textContent =
+            resume.name || "";
+
+
+        document.getElementById("email")
+            .textContent =
+            resume.email || "";
+
+
+        document.getElementById("phone")
+            .textContent =
+            resume.phone || "";
+
+
+        document.getElementById("address")
+            .textContent =
+            resume.address || "";
+
+
+        document.getElementById("dob")
+            .textContent =
+            resume.dob || "";
+
+
+        document.getElementById("age")
+            .textContent =
+            resume.age ?? "";
+
+
+        document.getElementById("course")
+            .textContent =
+            resume.course || "";
+
+
+        document.getElementById("branch")
+            .textContent =
+            resume.branch || "";
+
+
+        document.getElementById("objective")
+            .textContent =
+            resume.objective || "";
+
+
+        // ===============================
+        // PHOTO
+        // ===============================
+
+        const photo =
+            document.getElementById("profilePhoto");
+
+
+        if (resume.photo) {
+
+            photo.src =
+                resume.photo;
+
+        }
+
+        else {
+
+            photo.style.display =
+                "none";
+
+        }
+
+
+        // ===============================
+        // SKILLS
+        // ===============================
+
+        const skillsElement =
+            document.getElementById("skills");
+
+
+        skillsElement.innerHTML = "";
+
+
+        if (Array.isArray(resume.skills)) {
+
+            resume.skills.forEach(skill => {
+
+                if (!skill) return;
+
+
+                const li =
+                    document.createElement("li");
+
+
+                li.textContent =
+                    skill;
+
+
+                skillsElement.appendChild(li);
+
+            });
+
+        }
+
+        else if (
+            typeof resume.skills === "string"
+        ) {
+
+            resume.skills
+                .split(",")
+                .map(skill => skill.trim())
+                .filter(skill => skill)
+                .forEach(skill => {
+
+                    const li =
+                        document.createElement("li");
+
+
+                    li.textContent =
+                        skill;
+
+
+                    skillsElement.appendChild(li);
+
+                });
+
+        }
+
+
+        // ===============================
+        // EDUCATION
+        // ===============================
+
+        const educationElement =
+            document.getElementById(
+                "education"
+            );
+
+
+        educationElement.innerHTML = "";
+
+
+        if (Array.isArray(
+            resume.education
+        )) {
+
+            resume.education.forEach(edu => {
+
+                const div =
+                    document.createElement("div");
+
+
+                div.className =
+                    "item";
+
+
+                div.innerHTML = `
+                    <strong>
+                        ${edu.institution || ""}
+                    </strong>
+
+                    <br>
+
+                    Degree:
+                    ${edu.degree || ""}
+
+                    <br>
+
+                    Year:
+                    ${edu.year || ""}
+
+                    <br>
+
+                    Percentage:
+                    ${edu.percentage || ""}
+                `;
+
+
+                educationElement.appendChild(
+                    div
+                );
+
+            });
+
+        }
+
+
+        // ===============================
+        // EXPERIENCE
+        // ===============================
+
+        const experienceElement =
+            document.getElementById(
+                "experience"
+            );
+
+
+        experienceElement.innerHTML = "";
+
+
+        if (Array.isArray(
+            resume.experience
+        )) {
+
+            resume.experience.forEach(exp => {
+
+                const div =
+                    document.createElement("div");
+
+
+                div.className =
+                    "item";
+
+
+                div.innerHTML = `
+                    <strong>
+                        ${exp.company || ""}
+                    </strong>
+
+                    <br>
+
+                    Role:
+                    ${exp.role || ""}
+
+                    <br>
+
+                    Duration:
+                    ${exp.duration || ""}
+
+                    <br>
+
+                    ${exp.description || ""}
+                `;
+
+
+                experienceElement.appendChild(
+                    div
+                );
+
+            });
+
+        }
+
+
+        // ===============================
+        // SHOW RESUME
+        // ===============================
+
+        document.getElementById(
+            "loading"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "error"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "resumeContainer"
+        ).style.display = "block";
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "PROFILE ERROR:",
+            error
+        );
+
+
+        document.getElementById(
+            "loading"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "resumeContainer"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "error"
+        ).textContent =
+            error.message;
+
+    }
+
+}
+
+
+// ===============================
+// EDIT / UPDATE RESUME
+// ===============================
+
+function editResume() {
+
+    if (
+        !currentResume ||
+        !currentResume._id
+    ) {
+
+        alert(
+            "Resume information not available"
+        );
+
+        return;
+
+    }
+
+
+    const id =
+        currentResume._id;
+
+
+    const name =
+        currentResume.name || "";
+
+
+    window.location.href =
+        `index.html?editId=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`;
+
+}
+
+
+// ===============================
+// BACK BUTTON
+// ===============================
+
+function goBack() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+// ===============================
+// START
+// ===============================
+
+loadResume();
+
+</script>
+
+</body>
+</html>
